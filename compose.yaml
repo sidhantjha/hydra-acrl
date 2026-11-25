@@ -1,0 +1,75 @@
+name: hydra-acrl
+
+x-planning-mounts:
+  - &input
+    type: bind
+    source: ${HYDRA_ACRL_STATE_DIR:-./docker-data}/input
+    target: /input
+    read_only: true
+    bind: {create_host_path: false}
+  - &results
+    type: bind
+    source: ${HYDRA_ACRL_STATE_DIR:-./docker-data}/results
+    target: /results
+    bind: {create_host_path: false}
+
+services:
+  planning:
+    image: hydra-acrl:planning
+    pull_policy: never
+    platform: linux/amd64
+    user: "${HYDRA_ACRL_UID:-1000}:${HYDRA_ACRL_GID:-1000}"
+    environment:
+      HOME: /tmp
+      MPLBACKEND: Agg
+    volumes: [*input, *results]
+
+  mapping:
+    image: ${HYDRA_ACRL_IMAGE:-hydra-acrl:latest}
+    pull_policy: never
+    platform: linux/amd64
+    init: true
+    tty: true
+    stdin_open: true
+    user: "${HYDRA_ACRL_UID:-1000}:${HYDRA_ACRL_GID:-1000}"
+    gpus: all
+    shm_size: 1gb
+    stop_grace_period: 240s
+    environment:
+      HOME: /opt/hydra-acrl/hydra_mapping/runs/.container-home
+      ROS_DOMAIN_ID: ${ROS_DOMAIN_ID:-42}
+      ROS_AUTOMATIC_DISCOVERY_RANGE: LOCALHOST
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics,display
+    volumes:
+      - *input
+      - *results
+      - type: bind
+        source: ${HYDRA_ACRL_STATE_DIR:-./docker-data}/runs
+        target: /opt/hydra-acrl/hydra_mapping/runs
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${HYDRA_ACRL_STATE_DIR:-./docker-data}/engine
+        target: /assets/engine
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${HYDRA_ACRL_ONNX:-./hydra_mapping/external/models/ade20k-efficientvit_seg_l2.onnx}
+        target: /assets/model.onnx
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${HYDRA_ACRL_AWS:-./hydra_mapping/small_house}
+        target: /opt/hydra-acrl/hydra_mapping/small_house
+        read_only: true
+        bind: {create_host_path: false}
+
+  mapping-wslg:
+    extends: {service: mapping}
+    profiles: [wslg]
+    environment:
+      HYDRA_ACRL_WSLG: "1"
+      GALLIUM_DRIVER: d3d12
+      MESA_D3D12_DEFAULT_ADAPTER_NAME: NVIDIA
+    devices:
+      - /dev/dxg:/dev/dxg
+    volumes:
+      - /usr/lib/wsl:/usr/lib/wsl:ro

@@ -1,0 +1,46 @@
+# Provenance only. Kimera-RPGO requires external retrieval and license review.
+repositories:
+  hydra:
+    type: git
+    url: https://github.com/MIT-SPARK/Hydra.git
+    version: 654c3303e1ad64031759ef230d9aec024c11fb99
+  hydra_ros:
+    type: git
+    url: https://github.com/MIT-SPARK/Hydra-ROS.git
+    version: f95e3c7f1473b14f570378d7d2350c8848ef6cc6
+  spark_dsg:
+    type: git
+    url: https://github.com/MIT-SPARK/Spark-DSG.git
+    version: be110f394bbc6d74e0390f77d41b11aae175fd0c
+  semantic_inference:
+    type: git
+    url: https://github.com/MIT-SPARK/semantic_inference.git
+    version: d8ca2e60ca7b872aea73fd28be37b1a3b919eab8
+  config_utilities:
+    type: git
+    url: https://github.com/MIT-SPARK/config_utilities.git
+    version: 2e53b6d8d9d908d06cf172741346806d9f664cf8
+  spatial_hash:
+    type: git
+    url: https://github.com/MIT-SPARK/Spatial-Hash.git
+    version: 8045892f34978d78870d806a50f8e5aefdbe52fc
+  ianvs:
+    type: git
+    url: https://github.com/MIT-SPARK/Ianvs.git
+    version: a4fb1cb78774df3adfd8bb541d55d8d85556b471
+  kimera_pgmo:
+    type: git
+    url: https://github.com/MIT-SPARK/Kimera-PGMO.git
+    version: dcf948b8d8f34a45ec59e5c09d54213dc28764d1
+  kimera_rpgo:
+    type: git
+    url: https://github.com/MIT-SPARK/Kimera-RPGO.git
+    version: f1fee0900ef6825bf76304685668235cf5dd008d
+  pose_graph_tools:
+    type: git
+    url: https://github.com/MIT-SPARK/pose_graph_tools.git
+    version: 965dfe864487be9040195c598fd89718563c348c
+  teaser_plusplus:
+    type: git
+    url: https://github.com/MIT-SPARK/TEASER-plusplus.git
+    version: e2f6f17bb610f06b5236b18cfbd38333802d9b6b

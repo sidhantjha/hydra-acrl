@@ -1,19 +1,58 @@
 __pycache__/
-*.pyc
-*.pyo
-.vscode/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+.venv-*/
+.vscode/*
+!/.vscode/settings.json
 .idea/
+.env
+.env.*
+*.pem
+*.key
+credentials*
+private/
+.aws/
+.agents/
+.codex/
 
-build/
-install/
-log/
+# Generated overlay output. Upstream install/ and log/ source manifests remain visible.
+/hydra_mapping/*_ws/build/
+/hydra_mapping/*_ws/install/
+/hydra_mapping/*_ws/log/
+/hydra_mapping/external/
+/hydra_mapping/runs/
+/hydra_mapping/hydra_ws/src/kimera_rpgo/
+/hydra_task_and_motion_planning/build/
+/hydra_task_and_motion_planning/dist/
+/hydra_task_and_motion_planning/results/
+/hydra_task_and_motion_planning/experiments/archive/
+/hydra_task_and_motion_planning/experiments/small_house/run_01/
 
-data/*.json
-data/*.json.gz
-data/*.bag
-data/*.db3
-data/*.mcap
-
+*.bag
+*.db3
+*.mcap
 *.onnx
 *.trt
 *.engine
+*.tmp
+*~
+
+# Small upstream GNN unit-test fixtures are source resources.
+!/hydra_mapping/hydra_ws/src/hydra/tests/resources/**/*.onnx
+
+# Docker runtime mounts.
+/docker-data/
+
+# Optional upstream research fixtures with separate data provenance.
+/hydra_mapping/hydra_ws/src/spark_dsg/python/tests/resources/apartment_dsg.json
+/hydra_mapping/hydra_ws/src/spark_dsg/python/tests/resources/example_mp3d_scene.house
+/hydra_mapping/hydra_ws/src/semantic_inference/semantic_inference/python/test/resources/clip_test_pairs/
+/hydra_mapping/hydra_ws/src/teaser_plusplus/test/benchmark/data/
+/hydra_mapping/hydra_ws/src/semantic_inference/semantic_inference/python/test/resources/*.jpg
+/hydra_mapping/hydra_ws/src/semantic_inference/docs/media/demo_segmentation.png
+
+# Keep captures out of the staging set until the owner has reviewed them.
+/docs/screenshots/*
+!/docs/screenshots/README.md

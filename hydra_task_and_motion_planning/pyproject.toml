@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "swarmx-planning"
+version = "0.1.0"
+description = "Saved-DSG uncertainty-conditioned graph planning experiments"
+requires-python = ">=3.12,<3.13"
+dependencies = ["numpy==1.26.4", "spark-dsg==1.1.3"]
+
+[project.optional-dependencies]
+viz = ["matplotlib>=3.8,<4", "networkx==3.6.1", "Pillow>=10.2,<13"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"swarmx_planning.control" = ["*.reference"]

@@ -1,0 +1,70 @@
+diff --git a/hydra_ros/config/datasets/oakd.yaml b/hydra_ros/config/datasets/oakd.yaml
+index c65b7ec..e69de29 100644
+--- a/hydra_ros/config/datasets/oakd.yaml
++++ b/hydra_ros/config/datasets/oakd.yaml
+@@ -1,16 +0,0 @@
+----
+-input:
+-  type: RosInput
+-  tf_verbosity: 1
+-  clear_queue_on_fail: true
+-  inputs:
+-    camera:
+-      receiver:
+-        type: ImageReceiver
+-      sensor:
+-        type: camera_info
+-        min_range: $(arg sensor_min_range)
+-        max_range: $(arg sensor_max_range)
+-        extrinsics:
+-          type: ros
+-          sensor_frame: left_cam
+diff --git a/hydra_ros/config/datasets/uhumans2.yaml b/hydra_ros/config/datasets/uhumans2.yaml
+index ff902b8..9c355b0 100644
+--- a/hydra_ros/config/datasets/uhumans2.yaml
++++ b/hydra_ros/config/datasets/uhumans2.yaml
+@@ -6,5 +6,5 @@ input:
+   inputs:
+     left_cam:
+       receiver: {type: ClosedSetImageReceiver}
+-      sensor: {type: camera_info, min_range: 0.1, max_range: 5.0, extrinsics: {type: ros, robot_frame: base_link_gt}}
++      sensor: {type: camera_info, min_range: 0.1, max_range: 10.0, extrinsics: {type: ros, robot_frame: base_link_gt}}
+ features: {type: FeatureReceiver}
+diff --git a/hydra_ros/launch/datasets/uhumans2.launch.yaml b/hydra_ros/launch/datasets/uhumans2.launch.yaml
+index b744bd6..ee1ec5c 100644
+--- a/hydra_ros/launch/datasets/uhumans2.launch.yaml
++++ b/hydra_ros/launch/datasets/uhumans2.launch.yaml
+@@ -17,7 +17,7 @@ launch:
+       - push_ros_namespace: {namespace: tesse/left_cam}
+       - set_remap: {from: color/image_raw, to: rgb/image_raw}
+       - include:
+-          if: $(not $(var use_gt_semantics))
++          if: 'false'
+           file: $(find-pkg-share semantic_inference_ros)/launch/closed_set.launch.yaml
+           arg:
+             - {name: labelspace_name, value: $(var labelspace)}
+@@ -38,3 +38,8 @@ launch:
+         - {name: map_frame, value: map}
+         - {name: lcd_config_path, value: $(find-pkg-share hydra)/config/lcd/uhumans2.yaml}
+         - {name: extra_yaml, value: $(if $(var use_gt_semantics) $(var extra_yaml_gt) $(var extra_yaml_no_gt))}
++  - node:
++      pkg: tf2_ros
++      name: world_to_map
++      exec: static_transform_publisher
++      args: --frame-id world --child-frame-id map
+\ No newline at end of file
+diff --git a/hydra_ros/launch/hydra.launch.yaml b/hydra_ros/launch/hydra.launch.yaml
+index 450da65..b6311ce 100644
+--- a/hydra_ros/launch/hydra.launch.yaml
++++ b/hydra_ros/launch/hydra.launch.yaml
+@@ -11,8 +11,8 @@ launch:
+   - arg: {name: labelspace, description: Closed-set semantics description}
+   - arg: {name: robot_id, default: '0', description: Unique robot identifier}
+   - arg: {name: sensor_frame, default: left_cam, description: Camera frame}
+-  - arg: {name: robot_frame, default: base_link_gt, description: Robot body tf frame}
+-  - arg: {name: odom_frame, default: world, description: Odometry (map) frame}
++  - arg: {name: robot_frame, default: base_link, description: Robot body tf frame}
++  - arg: {name: odom_frame, default: odom, description: Odometry (map) frame}
+   - arg: {name: map_frame, default: map, description: Backend scene graph frame}
+   # configuration
+   - arg: {name: hydra_config_path, default: $(find-pkg-share hydra)/config/datasets/$(var dataset).yaml, description: Primary hydra config}

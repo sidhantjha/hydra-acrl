@@ -1,0 +1,13 @@
+diff --git a/models/aws_robomaker_residential_ShoeRack_01/model.sdf b/models/aws_robomaker_residential_ShoeRack_01/model.sdf
+index 5e05095..4a88cb2 100644
+--- a/models/aws_robomaker_residential_ShoeRack_01/model.sdf
++++ b/models/aws_robomaker_residential_ShoeRack_01/model.sdf
+@@ -11,7 +11,7 @@
+             <ixz>0</ixz>
+             <iyy>0.04</iyy>
+             <iyz>0</iyz>
+-            <ixx>0.02</ixx>
++            <izz>0.02</izz>
+           </inertia>
+       </inertial>
+ 

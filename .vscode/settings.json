@@ -1,0 +1,17 @@
+{
+  "files.exclude": {
+    "**/.venv": true,
+    "docker-data": true,
+    "**/__pycache__": true,
+    "**/*.egg-info": true,
+    "hydra_mapping/*_ws/build": true,
+    "hydra_mapping/*_ws/install": true,
+    "hydra_mapping/*_ws/log": true,
+    "hydra_mapping/external": true,
+    "hydra_mapping/runs": true,
+    "hydra_task_and_motion_planning/build": true,
+    "hydra_task_and_motion_planning/dist": true,
+    "hydra_task_and_motion_planning/results": true,
+    "hydra_task_and_motion_planning/experiments/archive": true
+  }
+}
